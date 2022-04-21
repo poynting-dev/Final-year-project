@@ -36,6 +36,13 @@ import Products from "./pages/Products";
 import Blog from "./pages/Blog";
 import User from "./pages/User";
 import NotFound from "./pages/Page404";
+//firebase blog pages below-----------------------------
+import AddArticle from "../src/my-articles/src/AddArticle";
+import Articles from "../src/my-articles/src/Articles";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
+import App from "../src/my-articles/src/App";
 
 function FirebaseApp() {
   return (
@@ -58,6 +65,9 @@ function FirebaseApp() {
                   <Route path="/" element={<DashboardLayout />}>
                     <Route path="/" element={<DashboardApp />} />
                     <Route path="/blog" element={<Blog />} />
+                    <Route path="/articles" element={<App />}>
+                      <Route path="/articles" element={<ToastContainer />} />
+                    </Route>
                   </Route>
                   {/* <Route exact path="/" element={<Dashboard />} /> */}
                   <Route path="/update-profile" element={<UpdateProfile />} />
