@@ -69,7 +69,8 @@
     "simplebar-react": "^2.3.6",
     "web-vitals": "^2.1.4",
     "yup": "^0.32.11",
-    "react-toastify": "^8.2.0"
+    "react-toastify": "^8.2.0",
+    "node-sass": "^7.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.17.5",
@@ -84,6 +85,12 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
-    "prettier": "^2.5.1"
+    "prettier": "^2.5.1",
+    "autoprefixer": "^9.8.6",
+    "postcss": "^8.0.0",
+    "postcss-cli": "^8.1.0",
+    "postcss-flexbugs-fixes": "^5.0.2",
+    "postcss-preset-env": "^7.4.4",
+    "tailwindcss": "^3.0.24"
   }
 }

@@ -43,6 +43,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import App from "../src/my-articles/src/App";
+import ArticlePage from "./pages/ArticlePage";
+import CreateBlog from "./pages/CreateBlog";
 
 function FirebaseApp() {
   return (
@@ -65,6 +67,8 @@ function FirebaseApp() {
                   <Route path="/" element={<DashboardLayout />}>
                     <Route path="/" element={<DashboardApp />} />
                     <Route path="/blog" element={<Blog />} />
+                    <Route path="/new-blog" element={<CreateBlog />} />
+                    <Route path="/test" element={<ArticlePage />} />
                     <Route path="/articles" element={<App />}>
                       <Route path="/articles" element={<ToastContainer />} />
                     </Route>
