@@ -1,5 +1,5 @@
-import { addDoc, collection, Timestamp } from "firebase/firestore";
 import React, { useState } from "react";
+import { addDoc, collection, Timestamp } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import db, { storage } from "./firebaseConfig";
 import { toast } from "react-toastify";
@@ -20,6 +20,7 @@ export default function AddArticle() {
 
   const handleImageChange = (e) => {
     setFormData({ ...formData, image: e.target.files[0] });
+    console.log(e.target.files[0]);
   };
 
   const handlePublish = () => {
