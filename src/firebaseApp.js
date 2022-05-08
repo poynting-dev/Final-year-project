@@ -45,6 +45,10 @@ import { ToastContainer } from "react-toastify";
 import App from "../src/my-articles/src/App";
 import ArticlePage from "./pages/ArticlePage";
 import CreateBlog from "./pages/CreateBlog";
+import FacultyInfo from "./pages/FacultyInfo";
+import NoticePage from "./pages/NoticePage";
+import PublishNotice from "./pages/PublishNotice";
+import HandleApplication from "./pages/HandleApplication";
 
 function FirebaseApp() {
   return (
@@ -69,6 +73,12 @@ function FirebaseApp() {
                     <Route path="/blog" element={<Blog />} />
                     <Route path="/new-blog" element={<CreateBlog />} />
                     <Route path="/test" element={<ArticlePage />} />
+                    <Route path="/faculty" element={<FacultyInfo />} />
+                    <Route path="/products" element={<Products />} />
+                    <Route path="/notice" element={<NoticePage />} />
+                    <Route path="/publish" element={<PublishNotice />} />
+                    <Route path="/handle" element={<HandleApplication />} />
+                    <Route path="/*" element={<NotFound />} />
                     <Route path="/articles" element={<App />}>
                       <Route path="/articles" element={<ToastContainer />} />
                     </Route>

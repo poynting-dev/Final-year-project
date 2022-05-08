@@ -7,7 +7,7 @@ export default function ArticlePage() {
     <>
       <div className="container">
         <div
-          className="bg-fixed rounded-t-lg h-64"
+          className="bg-fixed rounded-t-lg h-80"
           style={{
             backgroundImage:
               "url(" +
