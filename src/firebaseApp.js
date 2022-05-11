@@ -2,7 +2,8 @@ import React, { Fragment } from "react";
 import { Form, Button, Card, Container } from "react-bootstrap";
 import Signup from "./Signup";
 import Dashboard from "./Dashboard";
-import Login from "./Login";
+// import Login from "./Login";
+import Login from "./pages/Login";
 import { AuthProvider } from "./contexts/AuthContext";
 import {
   BrowserRouter as Router,
@@ -49,6 +50,9 @@ import FacultyInfo from "./pages/FacultyInfo";
 import NoticePage from "./pages/NoticePage";
 import PublishNotice from "./pages/PublishNotice";
 import HandleApplication from "./pages/HandleApplication";
+import PublishApplication from "./pages/PublishApplication";
+import AllApplications from "./pages/AllApplications";
+import AllApplicationsAdmin from "./pages/AllApplicationsAdmin";
 
 function FirebaseApp() {
   return (
@@ -72,12 +76,24 @@ function FirebaseApp() {
                     <Route path="/" element={<DashboardApp />} />
                     <Route path="/blog" element={<Blog />} />
                     <Route path="/new-blog" element={<CreateBlog />} />
-                    <Route path="/test" element={<ArticlePage />} />
+                    <Route path="/articlepage/:id" element={<ArticlePage />} />
                     <Route path="/faculty" element={<FacultyInfo />} />
                     <Route path="/products" element={<Products />} />
                     <Route path="/notice" element={<NoticePage />} />
                     <Route path="/publish" element={<PublishNotice />} />
-                    <Route path="/handle" element={<HandleApplication />} />
+                    <Route
+                      path="/make-application"
+                      element={<PublishApplication />}
+                    />
+
+                    <Route
+                      path="/admin-all-application"
+                      element={<AllApplicationsAdmin />}
+                    />
+                    <Route
+                      path="/handle-application/:id"
+                      element={<HandleApplication />}
+                    />
                     <Route path="/*" element={<NotFound />} />
                     <Route path="/articles" element={<App />}>
                       <Route path="/articles" element={<ToastContainer />} />
@@ -86,7 +102,8 @@ function FirebaseApp() {
                   {/* <Route exact path="/" element={<Dashboard />} /> */}
                   <Route path="/update-profile" element={<UpdateProfile />} />
                 </Route>
-                <Route path="/signup" element={<Signup />} />
+                {/* <Route path="/signup" element={<Signup />} /> */}
+                <Route path="/signup" element={<Register />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
               </Routes>

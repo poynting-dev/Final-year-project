@@ -118,15 +118,14 @@ export default function Blog() {
             New Post
           </Button>
         </Stack>
-        {console.log(posts)}
         <Stack
           mb={5}
           direction="row"
           alignItems="center"
           justifyContent="space-between"
         >
-          {console.log("Test: ", test)}
-          {console.log("Posts: ", posts)}
+          {/* {console.log("Test: ", test)}
+          {console.log("Posts: ", posts)} */}
           <BlogPostsSearch posts={posts} />
           <BlogPostsSort options={SORT_OPTIONS} />
         </Stack>

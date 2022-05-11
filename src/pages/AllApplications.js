@@ -9,28 +9,42 @@ import {
 import db from "src/my-articles/src/firebaseConfig.js";
 import { fDate } from "src/utils/formatTime";
 
-export default function NoticePage() {
-  const [notices, setNotices] = useState([]);
+export default function AllApplications() {
+  const [applications, setApplications] = useState([]);
   const [test, setTest] = useState([]);
 
   useEffect(() => {
-    const articleRef = collection(db, "Notices");
+    const articleRef = collection(db, "Applications");
     const q = query(articleRef, orderBy("createdAt", "desc"));
     onSnapshot(q, (snapshot) => {
-      const notices = snapshot.docs.map((doc) => ({
+      const applications = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
       // setArticles(articles.map(({ title, createdAt }) => title));
-      setNotices(
-        notices.map(
-          ({ id, title, description, file, category, createdAt }, index) => ({
+      setApplications(
+        applications.map(
+          (
+            {
+              id,
+              title,
+              description,
+              file,
+              createdAt,
+              createdByName,
+              createdByEmail,
+              createdByUserPhoto,
+            },
+            index
+          ) => ({
             id: id,
             title: title,
             description: description,
             createdAt: createdAt.toDate().toDateString(),
-            category: category,
             file: file,
+            createdByName: createdByName,
+            createdByUserPhoto: createdByUserPhoto,
+            createdByEmail: createdByEmail,
           })
         )
       );
@@ -39,6 +53,7 @@ export default function NoticePage() {
 
   return (
     <div className="container">
+      {console.log(applications)}
       <div className="mx-24 block shadow-md sm:rounded-lg">
         <fieldset className="p-3 border border-black">
           <legend>Notices</legend>
@@ -63,7 +78,7 @@ export default function NoticePage() {
                 Title
               </th>
               <th scope="col" className="px-6 py-3">
-                Category
+                Requested By(Student Name)
               </th>
               <th scope="col" className="px-6 py-3">
                 Published Date
@@ -74,8 +89,12 @@ export default function NoticePage() {
             </tr>
           </thead>
           <tbody>
-            {notices.map((notice, index) => (
-              <NoticeRow key={notice.id} notice={notice} index={index} />
+            {applications.map((application, index) => (
+              <ApplicationRow
+                key={application.id}
+                application={application}
+                index={index}
+              />
             ))}
           </tbody>
         </table>
@@ -84,8 +103,16 @@ export default function NoticePage() {
   );
 }
 
-const NoticeRow = ({ notice, index }) => {
-  const { title, description, createdAt, file, category } = notice;
+const ApplicationRow = ({ application, index }) => {
+  const {
+    title,
+    description,
+    file,
+    createdAt,
+    createdByName,
+    createdByEmail,
+    createdByUserPhoto,
+  } = application;
   return (
     <tr
       className="
@@ -141,15 +168,7 @@ const NoticeRow = ({ notice, index }) => {
           </details>
         </a>
       </th>
-      <td className="px-6 py-4">
-        {category === "Normal" ? (
-          <NormalButton />
-        ) : category == "Important" ? (
-          <ImpButton />
-        ) : (
-          <UrgentButton />
-        )}
-      </td>
+      <td className="px-6 py-4">{createdByName}</td>
       <td className="px-6 py-4">{fDate(createdAt)}</td>
       <td className="px-6 py-4 text-right">
         <a href={file} className="font-medium text-white hover:underline">

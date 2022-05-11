@@ -3,10 +3,11 @@ import { addDoc, collection, Timestamp } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { db, storage } from "../firebase";
 import { toast } from "react-toastify";
-
-const id = "dgNlT7hgIYp8tpUaAfVR";
+import { useParams } from "react-router-dom";
 
 export default function HandleApplication() {
+  let { id } = useParams();
+
   const [existingDocument, setExistingDocument] = useState("");
 
   const [formData, setFormData] = useState({
@@ -14,6 +15,7 @@ export default function HandleApplication() {
     description: "",
     file: "",
     remarks: "",
+    modifiedBy: "",
     createdAt: Timestamp.now().toDate(),
   });
 
@@ -36,7 +38,7 @@ export default function HandleApplication() {
 
     const storageRef = ref(
       storage,
-      `/notices/${Date.now()}${formData.file.name}`
+      `/applications/${Date.now()}${formData.file.name}`
     );
 
     const uploadImage = uploadBytesResumable(storageRef, formData.file);
@@ -74,16 +76,17 @@ export default function HandleApplication() {
                 file: url,
                 remarks: formData.remarks,
                 completed: "Yes",
+                approvedBy: "Dr. Aman Sinha",
                 modifiedAt: Timestamp.now().toDate(),
               },
               { merge: true }
             )
             .then(() => {
-              toast("Application added successfully", { type: "success" });
+              toast("Application approved successfully", { type: "success" });
               setProgress(0);
             })
             .catch((err) => {
-              toast("Error adding Application", { type: "error" });
+              toast("Error approving Application", { type: "error" });
             });
         });
       }
@@ -148,11 +151,29 @@ export default function HandleApplication() {
             </p>
           </div>
         </div>
-        <div class=" font-bold text-3xl text-black tracking-tight">
-          {formData.title}
+        <div class="pt-2 pb-2 font-bold text-3xl text-black tracking-tight">
+          Subject
         </div>
-        <div class="mt-1 font-medium text-md text-white-500">
-          {formData.description}
+        <div class="font-medium text-md text-white-500">
+          <input
+            type="text"
+            name="remarks"
+            value={formData.title}
+            className="bg-neutral-700	text-white shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 p-3 block w-full sm:text-lg border-gray-300 rounded-md"
+            disabled
+          />
+        </div>
+        <div class="pt-4 pb-2 font-bold text-3xl text-black tracking-tight">
+          Description
+        </div>
+        <div class="font-medium text-md text-white-500">
+          <input
+            type="text"
+            value={formData.description}
+            placeholder="Enter Remarks here!"
+            className="bg-neutral-700	text-white shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 p-3 block w-full sm:text-lg border-gray-300 rounded-md"
+            disabled
+          />
         </div>
         <div class="pt-4 pb-2 font-bold text-3xl text-black tracking-tight">
           Remarks
@@ -168,13 +189,14 @@ export default function HandleApplication() {
             className="bg-neutral-700	text-white shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 p-3 block w-full sm:text-lg border-gray-300 rounded-md"
           />
         </div>
-        <a
-          href={existingDocument}
-          className="focus:outline-none text-black bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:focus:ring-yellow-900"
-        >
-          Download
-        </a>
-
+        <div className="mt-8">
+          <a
+            href={existingDocument}
+            className="focus:outline-none text-black bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:focus:ring-yellow-900"
+          >
+            Click here to Download attached document for application
+          </a>
+        </div>
         <div class="pt-4 pb-2 font-bold text-3xl text-black tracking-tight">
           Document
         </div>

@@ -1,7 +1,7 @@
 // material
-import { Box, Grid, Container, Typography } from '@mui/material';
+import { Box, Grid, Container, Typography } from "@mui/material";
 // components
-import Page from '../components/Page';
+import Page from "../components/Page";
 import {
   AppTasks,
   AppNewUsers,
@@ -14,8 +14,8 @@ import {
   AppWebsiteVisits,
   AppTrafficBySite,
   AppCurrentSubject,
-  AppConversionRates
-} from '../sections/@dashboard/app';
+  AppConversionRates,
+} from "../sections/@dashboard/app";
 
 // ----------------------------------------------------------------------
 
@@ -31,10 +31,14 @@ export default function DashboardApp() {
             <AppWeeklySales />
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <AppNewUsers />
+            <a href="/notice">
+              <AppNewUsers />
+            </a>
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <AppItemOrders />
+            <a href="/make-application">
+              <AppItemOrders />
+            </a>
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
             <AppBugReports />

@@ -8,7 +8,7 @@ const getIcon = (name) => <Iconify icon={name} width={22} height={22} />;
 const sidebarConfig = [
   {
     title: "dashboard",
-    path: "/dashboard/app",
+    path: "",
     icon: getIcon("eva:pie-chart-2-fill"),
   },
   {
@@ -27,18 +27,18 @@ const sidebarConfig = [
     icon: getIcon("eva:file-text-fill"),
   },
   {
-    title: "login",
-    path: "/login",
+    title: "Admin - Handle Application",
+    path: "/handle-application",
     icon: getIcon("eva:lock-fill"),
   },
   {
-    title: "register",
-    path: "/register",
+    title: "Admin - Publish Notice",
+    path: "/publish",
     icon: getIcon("eva:person-add-fill"),
   },
   {
-    title: "Not found",
-    path: "/404",
+    title: "Admin - All Applications",
+    path: "/admin-all-application",
     icon: getIcon("eva:alert-triangle-fill"),
   },
 ];

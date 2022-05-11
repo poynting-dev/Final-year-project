@@ -9,28 +9,42 @@ import {
 import db from "src/my-articles/src/firebaseConfig.js";
 import { fDate } from "src/utils/formatTime";
 
-export default function NoticePage() {
-  const [notices, setNotices] = useState([]);
+export default function AllApplicationsAdmin() {
+  const [applications, setApplications] = useState([]);
   const [test, setTest] = useState([]);
 
   useEffect(() => {
-    const articleRef = collection(db, "Notices");
+    const articleRef = collection(db, "Applications");
     const q = query(articleRef, orderBy("createdAt", "desc"));
     onSnapshot(q, (snapshot) => {
-      const notices = snapshot.docs.map((doc) => ({
+      const applications = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
       // setArticles(articles.map(({ title, createdAt }) => title));
-      setNotices(
-        notices.map(
-          ({ id, title, description, file, category, createdAt }, index) => ({
+      setApplications(
+        applications.map(
+          (
+            {
+              id,
+              title,
+              description,
+              file,
+              createdAt,
+              createdByName,
+              createdByEmail,
+              createdByUserPhoto,
+            },
+            index
+          ) => ({
             id: id,
             title: title,
             description: description,
             createdAt: createdAt.toDate().toDateString(),
-            category: category,
             file: file,
+            createdByName: createdByName,
+            createdByUserPhoto: createdByUserPhoto,
+            createdByEmail: createdByEmail,
           })
         )
       );
@@ -39,9 +53,10 @@ export default function NoticePage() {
 
   return (
     <div className="container">
+      {console.log(applications)}
       <div className="mx-24 block shadow-md sm:rounded-lg">
         <fieldset className="p-3 border border-black">
-          <legend>Notices</legend>
+          <legend>Applications Requisition</legend>
           Computer Science & Engineering
         </fieldset>
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -63,7 +78,7 @@ export default function NoticePage() {
                 Title
               </th>
               <th scope="col" className="px-6 py-3">
-                Category
+                Requested By(Student Name)
               </th>
               <th scope="col" className="px-6 py-3">
                 Published Date
@@ -71,11 +86,18 @@ export default function NoticePage() {
               <th scope="col" className="px-6 py-3">
                 <span className="sr-only">Download</span>
               </th>
+              <th scope="col" className="px-6 py-3">
+                <span className="sr-only">Handle</span>
+              </th>
             </tr>
           </thead>
           <tbody>
-            {notices.map((notice, index) => (
-              <NoticeRow key={notice.id} notice={notice} index={index} />
+            {applications.map((application, index) => (
+              <ApplicationRow
+                key={application.id}
+                application={application}
+                index={index}
+              />
             ))}
           </tbody>
         </table>
@@ -84,8 +106,17 @@ export default function NoticePage() {
   );
 }
 
-const NoticeRow = ({ notice, index }) => {
-  const { title, description, createdAt, file, category } = notice;
+const ApplicationRow = ({ application, index }) => {
+  const {
+    id,
+    title,
+    description,
+    file,
+    createdAt,
+    createdByName,
+    createdByEmail,
+    createdByUserPhoto,
+  } = application;
   return (
     <tr
       className="
@@ -141,54 +172,21 @@ const NoticeRow = ({ notice, index }) => {
           </details>
         </a>
       </th>
-      <td className="px-6 py-4">
-        {category === "Normal" ? (
-          <NormalButton />
-        ) : category == "Important" ? (
-          <ImpButton />
-        ) : (
-          <UrgentButton />
-        )}
-      </td>
+      <td className="px-6 py-4">{createdByName}</td>
       <td className="px-6 py-4">{fDate(createdAt)}</td>
       <td className="px-6 py-4 text-right">
         <a href={file} className="font-medium text-white hover:underline">
           Download
         </a>
       </td>
+      <td className="px-6 py-4 text-right">
+        <a
+          href={`/handle-application/${id}`}
+          className="font-medium text-white hover:underline"
+        >
+          Handle
+        </a>
+      </td>
     </tr>
-  );
-};
-
-const NormalButton = () => {
-  return (
-    <button
-      type="button"
-      class="text-black bg-white hover:bg-slate-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-    >
-      Normal
-    </button>
-  );
-};
-
-const ImpButton = () => {
-  return (
-    <button
-      type="button"
-      class="focus:outline-none text-black bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:focus:ring-yellow-900"
-    >
-      Important
-    </button>
-  );
-};
-
-const UrgentButton = () => {
-  return (
-    <button
-      type="button"
-      class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
-    >
-      Urgent
-    </button>
   );
 };

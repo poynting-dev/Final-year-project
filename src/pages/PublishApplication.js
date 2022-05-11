@@ -5,12 +5,35 @@ import { db, storage } from "../firebase";
 import { toast } from "react-toastify";
 import { Navigate } from "react-router-dom";
 
-export default function PublishNotice() {
+// --------------------Authentication Purpose-----------------------
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "src/contexts/AuthContext.js";
+import { getAuth, updateProfile } from "firebase/auth";
+
+// --------------------Authentication Purpose-----------------------
+
+export default function PublishApplication() {
+  //========AUTH Purpose======================
+  const [error, setError] = useState("");
+  const { currentUser, logout } = useAuth();
+  const navigate = useNavigate();
+
+  async function handleLogout() {
+    setError("");
+
+    try {
+      await logout();
+      navigate("/login");
+    } catch {
+      setError("Failed to log out");
+    }
+  }
+  //========AUTH Purpose======================
+
   const [formData, setFormData] = useState({
     title: "",
     description: "",
     file: "",
-    category: "",
     createdAt: Timestamp.now().toDate(),
   });
 
@@ -26,19 +49,14 @@ export default function PublishNotice() {
   };
 
   const handlePublish = () => {
-    if (
-      !formData.title ||
-      !formData.description ||
-      !formData.category ||
-      !formData.file
-    ) {
+    if (!formData.title || !formData.description || !formData.file) {
       alert("Please fill all the fields");
       return;
     }
 
     const storageRef = ref(
       storage,
-      `/notices/${Date.now()}${formData.file.name}`
+      `/applications/${Date.now()}${formData.file.name}`
     );
 
     const uploadImage = uploadBytesResumable(storageRef, formData.file);
@@ -61,16 +79,18 @@ export default function PublishNotice() {
         });
 
         getDownloadURL(uploadImage.snapshot.ref).then((url) => {
-          const applicationRef = collection(db, "Notices");
+          const applicationRef = collection(db, "Applications");
           addDoc(applicationRef, {
             title: formData.title,
             description: formData.description,
             file: url,
-            category: formData.category,
             createdAt: Timestamp.now().toDate(),
+            createdByName: currentUser.displayName,
+            createdByEmail: currentUser.email,
+            createdByUserPhoto: currentUser.photoURL,
           })
             .then(() => {
-              toast("Notice Published successfully", { type: "success" });
+              toast("Application submitted successfully", { type: "success" });
               setProgress(0);
               // Navigate("/", { replace: true });
             })
@@ -84,8 +104,8 @@ export default function PublishNotice() {
 
   return (
     <div className="border p-3 mt-3 bg-light" style={{ position: "fixed" }}>
-      <h2>Create Article</h2>
-      <label htmlFor="">Title</label>
+      <h2>Create Application</h2>
+      <label htmlFor="">Subject</label>
       <input
         type="text"
         name="title"
@@ -103,24 +123,6 @@ export default function PublishNotice() {
         className="form-control"
         onChange={(e) => handleChange(e)}
       />
-
-      <label htmlfor="cars">Category: </label>
-      <br />
-      <select
-        name="category"
-        id="category"
-        value={formData.category}
-        onChange={(e) => handleChange(e)}
-      >
-        <option value="" disabled hidden>
-          Select an Option
-        </option>
-        <option value="Normal">Normal</option>
-        <option value="Important">Important</option>
-        <option value="Urgent">Urgent</option>
-      </select>
-
-      <br />
 
       {/* image */}
       <label htmlFor="">Image</label>
