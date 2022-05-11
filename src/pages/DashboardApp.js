@@ -28,7 +28,9 @@ export default function DashboardApp() {
         </Box>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3}>
-            <AppWeeklySales />
+            <a href="/faculty">
+              <AppWeeklySales />
+            </a>
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
             <a href="/notice">
@@ -41,7 +43,9 @@ export default function DashboardApp() {
             </a>
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <AppBugReports />
+            <a href="/all-application">
+              <AppBugReports />
+            </a>
           </Grid>
 
           <Grid item xs={12} md={6} lg={8}>

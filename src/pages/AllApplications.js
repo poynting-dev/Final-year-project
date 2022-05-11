@@ -5,17 +5,45 @@ import {
   onSnapshot,
   orderBy,
   query,
+  where,
 } from "firebase/firestore";
 import db from "src/my-articles/src/firebaseConfig.js";
 import { fDate } from "src/utils/formatTime";
+// --------------------Authentication Purpose-----------------------
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "src/contexts/AuthContext.js";
+import { getAuth, updateProfile } from "firebase/auth";
+
+// --------------------Authentication Purpose-----------------------
 
 export default function AllApplications() {
+  //========AUTH Purpose======================
+  const [error, setError] = useState("");
+  const { currentUser, logout } = useAuth();
+  const navigate = useNavigate();
+
+  async function handleLogout() {
+    setError("");
+
+    try {
+      await logout();
+      navigate("/login");
+    } catch {
+      setError("Failed to log out");
+    }
+  }
+  //========AUTH Purpose======================
+
   const [applications, setApplications] = useState([]);
   const [test, setTest] = useState([]);
 
   useEffect(() => {
     const articleRef = collection(db, "Applications");
-    const q = query(articleRef, orderBy("createdAt", "desc"));
+    const q = query(
+      articleRef,
+      orderBy("createdAt", "desc"),
+      where("capital", "==", currentUser.displayName)
+    );
     onSnapshot(q, (snapshot) => {
       const applications = snapshot.docs.map((doc) => ({
         id: doc.id,
@@ -34,6 +62,7 @@ export default function AllApplications() {
               createdByName,
               createdByEmail,
               createdByUserPhoto,
+              approvedBy,
             },
             index
           ) => ({
@@ -45,6 +74,7 @@ export default function AllApplications() {
             createdByName: createdByName,
             createdByUserPhoto: createdByUserPhoto,
             createdByEmail: createdByEmail,
+            approvedBy: approvedBy,
           })
         )
       );
@@ -53,10 +83,9 @@ export default function AllApplications() {
 
   return (
     <div className="container">
-      {console.log(applications)}
       <div className="mx-24 block shadow-md sm:rounded-lg">
         <fieldset className="p-3 border border-black">
-          <legend>Notices</legend>
+          <legend>Applications Requisition</legend>
           Computer Science & Engineering
         </fieldset>
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -84,7 +113,13 @@ export default function AllApplications() {
                 Published Date
               </th>
               <th scope="col" className="px-6 py-3">
+                Status
+              </th>
+              <th scope="col" className="px-6 py-3">
                 <span className="sr-only">Download</span>
+              </th>
+              <th scope="col" className="px-6 py-3">
+                <span className="sr-only">Handle</span>
               </th>
             </tr>
           </thead>
@@ -105,6 +140,7 @@ export default function AllApplications() {
 
 const ApplicationRow = ({ application, index }) => {
   const {
+    id,
     title,
     description,
     file,
@@ -112,6 +148,7 @@ const ApplicationRow = ({ application, index }) => {
     createdByName,
     createdByEmail,
     createdByUserPhoto,
+    approvedBy,
   } = application;
   return (
     <tr
@@ -140,7 +177,7 @@ const ApplicationRow = ({ application, index }) => {
       </td>
       <th
         scope="row"
-        className="px-6 py-1 font-medium text-gray-900 dark:text-white whitespace-nowrap "
+        className="px-2 py-1 font-medium text-gray-900 dark:text-white whitespace-nowrap "
       >
         <a
           href="#!"
@@ -170,44 +207,36 @@ const ApplicationRow = ({ application, index }) => {
       </th>
       <td className="px-6 py-4">{createdByName}</td>
       <td className="px-6 py-4">{fDate(createdAt)}</td>
+      <td className="px-6 py-4">
+        {approvedBy ? (
+          <button
+            type="button"
+            class="text-black bg-white hover:bg-slate-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+          >
+            Approved! by <b>{approvedBy}</b>
+          </button>
+        ) : (
+          <button
+            type="button"
+            class="text-black bg-white hover:bg-slate-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+          >
+            Progress
+          </button>
+        )}
+      </td>
       <td className="px-6 py-4 text-right">
         <a href={file} className="font-medium text-white hover:underline">
           Download
         </a>
       </td>
+      <td className="px-6 py-4 text-right">
+        <a
+          href={`/handle-application/${id}`}
+          className="font-medium text-white hover:underline"
+        >
+          Handle
+        </a>
+      </td>
     </tr>
-  );
-};
-
-const NormalButton = () => {
-  return (
-    <button
-      type="button"
-      class="text-black bg-white hover:bg-slate-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-    >
-      Normal
-    </button>
-  );
-};
-
-const ImpButton = () => {
-  return (
-    <button
-      type="button"
-      class="focus:outline-none text-black bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:focus:ring-yellow-900"
-    >
-      Important
-    </button>
-  );
-};
-
-const UrgentButton = () => {
-  return (
-    <button
-      type="button"
-      class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
-    >
-      Urgent
-    </button>
   );
 };

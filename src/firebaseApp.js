@@ -85,7 +85,10 @@ function FirebaseApp() {
                       path="/make-application"
                       element={<PublishApplication />}
                     />
-
+                    <Route
+                      path="/all-application"
+                      element={<AllApplications />}
+                    />
                     <Route
                       path="/admin-all-application"
                       element={<AllApplicationsAdmin />}

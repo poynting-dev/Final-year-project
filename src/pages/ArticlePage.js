@@ -66,10 +66,8 @@ export default function ArticlePage() {
                 </p>
               </div>
             </div>
-            <div class=" font-bold text-3xl text-black tracking-tight">
-              {formData.title}
-            </div>
-            <div class="mt-1 font-medium text-sm text-white-500">
+            <div class=" font-bold text-3xl text-white">{formData.title}</div>
+            <div class="mt-1 font-medium text-sm text-white">
               {formData.createdAt} · 4 min read
             </div>
           </div>
