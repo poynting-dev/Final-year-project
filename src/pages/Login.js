@@ -40,7 +40,7 @@ const ContentStyle = styled("div")(({ theme }) => ({
 
 export default function Login() {
   return (
-    <RootStyle title="Login | Minimal-UI">
+    <RootStyle title="Login | SRP">
       <AuthLayout>
         Don’t have an account? &nbsp;
         <Link
@@ -64,7 +64,7 @@ export default function Login() {
         <ContentStyle>
           <Stack sx={{ mb: 5 }}>
             <Typography variant="h4" gutterBottom>
-              Sign in to Minimal
+              Sign in to Student Resource Portal
             </Typography>
             <Typography sx={{ color: "text.secondary" }}>
               Enter your details below.

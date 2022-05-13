@@ -42,7 +42,7 @@ export default function AllApplications() {
     const q = query(
       articleRef,
       orderBy("createdAt", "desc"),
-      where("capital", "==", currentUser.displayName)
+      where("createdByEmail", "==", currentUser.email)
     );
     onSnapshot(q, (snapshot) => {
       const applications = snapshot.docs.map((doc) => ({

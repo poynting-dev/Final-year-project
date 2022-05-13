@@ -1,18 +1,19 @@
-import PropTypes from 'prop-types';
-import { Link as RouterLink } from 'react-router-dom';
+import PropTypes from "prop-types";
+import { Link as RouterLink } from "react-router-dom";
 // material
-import { Box } from '@mui/material';
+import { Box } from "@mui/material";
+import logo from "../_mocks_/srp-logo.png";
 
 // ----------------------------------------------------------------------
 
 Logo.propTypes = {
-  sx: PropTypes.object
+  sx: PropTypes.object,
 };
 
 export default function Logo({ sx }) {
   return (
     <RouterLink to="/">
-      <Box component="img" src="/static/logo.svg" sx={{ width: 40, height: 40, ...sx }} />
+      <Box component="img" src={logo} sx={{ width: 40, height: 30, ...sx }} />
     </RouterLink>
   );
 }

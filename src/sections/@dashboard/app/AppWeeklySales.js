@@ -39,13 +39,12 @@ const TOTAL = 714000;
 export default function AppWeeklySales() {
   return (
     <RootStyle>
-      <IconWrapperStyle>
-        <Iconify icon="ant-design:android-filled" width={24} height={24} />
-      </IconWrapperStyle>
-      <Typography variant="h4">Faculty List</Typography>
-      {/* <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
-        Faculty List
-      </Typography> */}
+      <div className="my-3.5 py-1">
+        <IconWrapperStyle>
+          <Iconify icon="fa-solid:chalkboard-teacher" width={24} height={24} />
+        </IconWrapperStyle>
+        <Typography variant="h4">Faculty List</Typography>
+      </div>
     </RootStyle>
   );
 }

@@ -41,7 +41,7 @@ export default function AppItemOrders() {
   return (
     <RootStyle>
       <IconWrapperStyle>
-        <Iconify icon="ant-design:windows-filled" width={24} height={24} />
+        <Iconify icon="fluent:mail-arrow-up-16-filled" width={32} height={32} />
       </IconWrapperStyle>
       <Typography variant="h6">
         {/* {fShortenNumber(TOTAL)} */}
