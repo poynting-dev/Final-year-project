@@ -83,7 +83,7 @@ export default function Register() {
             align="center"
             sx={{ color: "text.secondary", mt: 3 }}
           >
-            By registering, I agree to Minimal&nbsp;
+            By registering, I agree to SRP&nbsp;
             <Link underline="always" color="textPrimary">
               Terms of Service
             </Link>

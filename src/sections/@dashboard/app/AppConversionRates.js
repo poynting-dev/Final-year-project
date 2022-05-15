@@ -1,15 +1,15 @@
-import { merge } from 'lodash';
-import ReactApexChart from 'react-apexcharts';
+import { merge } from "lodash";
+import ReactApexChart from "react-apexcharts";
 // material
-import { Box, Card, CardHeader } from '@mui/material';
+import { Box, Card, CardHeader } from "@mui/material";
 // utils
-import { fNumber } from '../../../utils/formatNumber';
+import { fNumber } from "../../../utils/formatNumber";
 //
-import { BaseOptionChart } from '../../../components/charts';
+import { BaseOptionChart } from "../../../components/charts";
 
 // ----------------------------------------------------------------------
 
-const CHART_DATA = [{ data: [400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380] }];
+const CHART_DATA = [{ data: [400, 430, 448, 470] }];
 
 export default function AppConversionRates() {
   const chartOptions = merge(BaseOptionChart(), {
@@ -18,34 +18,31 @@ export default function AppConversionRates() {
       y: {
         formatter: (seriesName) => fNumber(seriesName),
         title: {
-          formatter: (seriesName) => `#${seriesName}`
-        }
-      }
+          formatter: (seriesName) => `#${seriesName}`,
+        },
+      },
     },
     plotOptions: {
-      bar: { horizontal: true, barHeight: '28%', borderRadius: 2 }
+      bar: { horizontal: true, barHeight: "28%", borderRadius: 2 },
     },
     xaxis: {
-      categories: [
-        'Italy',
-        'Japan',
-        'China',
-        'Canada',
-        'France',
-        'Germany',
-        'South Korea',
-        'Netherlands',
-        'United States',
-        'United Kingdom'
-      ]
-    }
+      categories: ["CSE", "EC", "ME", "EN"],
+    },
   });
 
   return (
     <Card>
-      <CardHeader title="Conversion Rates" subheader="(+43%) than last year" />
+      <CardHeader
+        title="Performance Improvement of Departments"
+        subheader="(+43%) than last year"
+      />
       <Box sx={{ mx: 3 }} dir="ltr">
-        <ReactApexChart type="bar" series={CHART_DATA} options={chartOptions} height={364} />
+        <ReactApexChart
+          type="bar"
+          series={CHART_DATA}
+          options={chartOptions}
+          height={364}
+        />
       </Box>
     </Card>
   );
