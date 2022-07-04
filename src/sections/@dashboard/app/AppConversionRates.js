@@ -9,16 +9,16 @@ import { BaseOptionChart } from "../../../components/charts";
 
 // ----------------------------------------------------------------------
 
-const CHART_DATA = [{ data: [400, 430, 448, 470] }];
+const CHART_DATA = [{ data: [500, 430, 448, 470] }];
 
 export default function AppConversionRates() {
   const chartOptions = merge(BaseOptionChart(), {
     tooltip: {
       marker: { show: false },
       y: {
-        formatter: (seriesName) => fNumber(seriesName),
+        formatter: (seriesName) => fNumber(seriesName / 10),
         title: {
-          formatter: (seriesName) => `#${seriesName}`,
+          formatter: (seriesName) => `${seriesName} %`,
         },
       },
     },

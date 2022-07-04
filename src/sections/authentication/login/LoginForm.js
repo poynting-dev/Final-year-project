@@ -124,7 +124,7 @@ export default function LoginForm() {
           <Link
             component={RouterLink}
             variant="subtitle2"
-            to="#"
+            to="/forgot-password"
             underline="hover"
           >
             Forgot password?

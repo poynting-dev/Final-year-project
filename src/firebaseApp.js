@@ -53,6 +53,8 @@ import HandleApplication from "./pages/HandleApplication";
 import PublishApplication from "./pages/PublishApplication";
 import AllApplications from "./pages/AllApplications";
 import AllApplicationsAdmin from "./pages/AllApplicationsAdmin";
+import Marksheet from "./pages/Marksheet";
+import FillMarks from "./pages/FillMarks";
 
 function FirebaseApp() {
   return (
@@ -74,6 +76,8 @@ function FirebaseApp() {
                 <Route exact path="/" element={<PrivateRoute />}>
                   <Route path="/" element={<DashboardLayout />}>
                     <Route path="/" element={<DashboardApp />} />
+                    <Route path="/fillmarks" element={<FillMarks />} />
+                    <Route path="/marksheet" element={<Marksheet />} />
                     <Route path="/blog" element={<Blog />} />
                     <Route path="/new-blog" element={<CreateBlog />} />
                     <Route path="/articlepage/:id" element={<ArticlePage />} />

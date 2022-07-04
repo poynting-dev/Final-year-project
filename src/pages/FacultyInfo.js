@@ -4,6 +4,9 @@ import ash from "../_mocks_/Ashish-Agrawal.jpg";
 import hg from "../_mocks_/2.png";
 import ls from "../_mocks_/5.jpg";
 import ad from "../_mocks_/4.jpg";
+import shah from "../_mocks_/SHAHJAHAN.jpg";
+import shailesh from "../_mocks_/Shailesh.jpg";
+import amit from "../_mocks_/amit_sir.jpg";
 
 export default function FacultyInfo() {
   return (
@@ -32,18 +35,35 @@ export default function FacultyInfo() {
           </span>
         </div>
         <section class="p-3 md:p-0 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5 items-start ">
-          <Faculty name="Anubha Dhaka" src={ad} desg="Assistant Professor" />
-          <Faculty
-            name="Mr. Ashish Agarwal"
-            src={ash}
-            desg="Assistant Professor"
-          />
           <Faculty
             name="Mr Hiresh Kumar Gupta"
             src={hg}
             desg="Asst. Professor &    HOD"
           />
-          <Faculty name="Dr. L.S. Maurya" src={ls} desg="Professor" />
+          <Faculty
+            name="Mr. Shailesh Saxena"
+            src={shailesh}
+            desg="Assistant Professor"
+            spec="Mr. Shailesh Saxena with experience of 16 years in the field of research, teaching and administration at different Institution of national repute."
+          />
+          <Faculty
+            name="Mr. Ashish Agarwal"
+            src={ash}
+            desg="Assistant Professor"
+            spec="Agile, Data Structures & Algorithms"
+          />
+          <Faculty
+            name="Ms. Anubha Dhaka"
+            src={ad}
+            spec="Cloud Computing, DBMS"
+            desg="Asst. Professor"
+          />
+          <Faculty
+            name="Mr. Shahjahan Ali"
+            src={shah}
+            spec="Compiler Design & Theory of Computation"
+            desg="Asst. Professor &    HOD"
+          />
         </section>
       </div>
     </div>
